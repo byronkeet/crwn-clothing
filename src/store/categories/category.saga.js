@@ -1,4 +1,4 @@
-import { takeLatest, all, call, pul, put } from "redux-saga/effects";
+import { takeLatest, all, call, put } from "redux-saga/effects";
 
 import { getCategoriesAndDocuments } from "../../utils/firebase/firebase.utils";
 
