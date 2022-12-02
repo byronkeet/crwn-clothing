@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
+import { AuthError, AuthErrorCodes } from 'firebase/auth';
 
 import FormInput from "../form-input/form-input.component";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
@@ -21,23 +22,23 @@ const SignInForm = () => {
 		setFormFields(defaultFormFields);
 	}
 
-	const handleChange = (event) => {
+	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = event.target;
 
 		setFormFields({ ...formFields, [name]: value })
 	}
 
-	const handleSubmit = (event) => {
+	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		try {
 			dispatch(emailSignInStart(email, password));
 			resetFormFields();
 		  } catch (error) {
-			switch (error.code) {
-				case 'auth/wrong-password':
+			switch ((error as AuthError).code) {
+				case AuthErrorCodes.INVALID_PASSWORD:
 					alert('Password is incorrect.');
 					break;
-				case 'auth/user-not-found':
+				case AuthErrorCodes.USER_MISMATCH:
 					alert('User email not found. Please sign up.');
 					break;
 				default:
