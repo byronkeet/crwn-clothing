@@ -9,7 +9,7 @@ import { stripePromise } from './utils/stripe/stripe.utils';
 import App from './App';
 import { store, persistor } from './store/store';
 
-import './index.scss';
+import { GlobalStyle } from './global.styles';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,6 +18,7 @@ root.render(
 		<PersistGate loading={null} persistor={persistor}>
 			<BrowserRouter>
 				<Elements stripe={stripePromise}>
+					<GlobalStyle />
 					<App />
 				</Elements>
 			</BrowserRouter>
